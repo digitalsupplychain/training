@@ -1,2 +1,6 @@
-# training
-Training tracks for Data Science, Backend (C# - SQL Server), Web (React) and Mobile (React Native)
+# DSC Team Training Tracks
+
+### Training Plan
+1. Suscription to **Visual Studio Dev Essentials**
+
+
