@@ -6,3 +6,4 @@ Adding yet more code
 
 Fix1
 >>>>>>> origin/master
+"Fix1" 
