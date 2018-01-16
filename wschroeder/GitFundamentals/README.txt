@@ -7,7 +7,3 @@ Feature2
 
 Feature2 
 Feature2 changes
-
-<<<<<<< .mineSharing remotely is fun and  very easy
-"Feature1" 
-=======>>>>>>> .theirs
