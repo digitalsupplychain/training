@@ -4,14 +4,3 @@ Adding some code here
 Adding yet more code
 
 Fix1
-<<<<<<< HEAD
-
-Adding yet more code
-
-=======
->>>>>>> origin/master
-"Fix1" 
-<<<<<<< HEAD
->>>>>>> 4573f3c... Added fix1
-=======
->>>>>>> 4573f3c... Added fix1
