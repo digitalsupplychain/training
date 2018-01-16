@@ -8,4 +8,7 @@ Feature2
 =======
 "feature2" 
 "feature2 cahnges" 
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
