@@ -5,10 +5,6 @@ Sharing remotely is fun and  very easy
 
 Feature2
 
+Feature2 
+Feature2 changes
 
-<<<<<<< Updated upstream
-=======
-Sharing remotely is fun and  very easy
-"feature2" 
-"feature2 cahnges" 
->>>>>>> Stashed changes
