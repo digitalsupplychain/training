@@ -26,5 +26,32 @@ Section pending.
 
 ## Found an Issue?
 If there find any problem, please feel free to create an issue in this repo.
+# 
+## Mobile Track: React Native
 
+### 1. Getting Started
+In order to start working with React Native you will need [**NodeJS**](https://nodejs.org/en/download/) and **NPM 4.6.1** installed in your system.
 
+**NodeJS** installs **NPM 5** by default, so after installing it you will need to downgrade NPM to version 4.6.1, because React Native is only compatible with the latter.
+
+You can do so by executing the following command in the Windows console:
+
+```
+npm install -g npm@4.6.1
+```
+
+*It is recommended to have elevated privileges to successfully complete these steps.*
+
+### 2. The right tools for the right job
+
+Now that you've installed NodeJS, it's time to take a look at your IDE. This is where you will work your files and type your code, so most of your time working with React Native will be spent here.
+
+There isn't an actual specific IDE for React Native, in reality any text editor works, but you can install a bundle of extensions for [**Visual Studio Code**](https://code.visualstudio.com/) that will make your life easier.
+
+You can find this bundle [**here**](https://medium.com/react-native-training/vscode-for-react-native-526ec4a368ce), along with an explanation on all the extensions it's going to install.
+
+### 3. Hello, React Native!
+
+With all previous installations set up, you are ready to create and run your first React Native application.
+
+Follow this [practical guide](https://facebook.github.io/react-native/docs/getting-started.html) for all necessary instructions!
