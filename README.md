@@ -30,7 +30,7 @@ If there find any problem, please feel free to create an issue in this repo.
 ## Mobile Track: React Native
 
 ### 1. Getting Started
-In order to start working with React Native you will need [**NodeJS**](https://nodejs.org/en/download/) and **NPM 4.6.1** installed in your system.
+In order to start working with React Native you will need [**NodeJS**](https://nodejs.org/en/download/), **NPM 4.6.1** and **React Native** installed in your system.
 
 **NodeJS** installs **NPM 5** by default, so after installing it you will need to downgrade NPM to version 4.6.1, because React Native is only compatible with the latter.
 
@@ -38,6 +38,12 @@ You can do so by executing the following command in the Windows console:
 
 ```
 npm install -g npm@4.6.1
+```
+
+The only missing part now is the React Native package, which we will install using NPM with the following command on the console:
+
+```
+npm install -g create-react-native-app
 ```
 
 *It is recommended to have elevated privileges to successfully complete these steps.*
