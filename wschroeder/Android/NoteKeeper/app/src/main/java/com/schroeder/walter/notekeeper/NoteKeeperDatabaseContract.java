@@ -36,7 +36,7 @@ public final class NoteKeeperDatabaseContract {
         public static final String TABLE_NAME = "note_info";
         public static final String COLUMN_NOTE_TITLE = "note_title";
         public static final String COLUMN_NOTE_TEXT = "note_text";
-        public static final String COLUMN_COURSE_ID = "note_course_id";
+        public static final String COLUMN_COURSE_ID = "course_id";
 
         public static final String  INDEX1 = TABLE_NAME + "_index1";
         public static final String SQL_CREATE_INDEX1 =
