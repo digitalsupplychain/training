@@ -51,7 +51,8 @@ public class MainActivity extends AppCompatActivity {
             for (word="";mPos<mLimit && Character.isLetter(text.charAt(mPos)); mPos++) {
                 word = word + text.charAt(mPos);
             }
-            mText = mText + mWord.scramble(word);
+            if (word.length()>1)
+                mText = mText + mWord.scramble(word);
         }
         return mText;
     }

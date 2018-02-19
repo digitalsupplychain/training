@@ -14,6 +14,9 @@ public final class Word {
         String mScrambledWord;
         int mRdm;
 
+        if(word.length()<1)
+            return word;
+
         mScrambledWord = String.valueOf(word.charAt(0));
         mMissingLetters = word.substring(1,word.length());
 
