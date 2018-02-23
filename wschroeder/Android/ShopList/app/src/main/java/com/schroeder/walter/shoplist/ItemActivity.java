@@ -1,52 +1,88 @@
 package com.schroeder.walter.shoplist;
 
-import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.app.LoaderManager;
+import android.content.ContentUris;
+import android.content.ContentValues;
+import android.content.Loader;
+import android.database.Cursor;
+import android.net.Uri;
+import android.os.PersistableBundle;
+import android.support.annotation.Nullable;
+import android.support.design.widget.NavigationView;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.View;
+import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
-import android.view.MenuItem;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.Toast;
 
-public class ItemActivity extends AppCompatActivity {
+import com.schroeder.walter.shoplist.ShopListDatabaseContract.ItemInfoEntry;
+import com.schroeder.walter.shoplist.ShopListProviderContract.Items;
+
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.List;
+
+/**
+ * Created by wschroeder on 20/02/2018.
+ *
+ * Create or Modify on Item
+ *
+ */
+
+public class ItemActivity extends AppCompatActivity{
+
+    private Uri mItemUri;
+    private int mItemId;
+    private EditText mtextItemDescription;
+    private EditText mtextItemPrice;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_item);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        setContentView(R.layout.activity_add_item);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+        ImageView image = (ImageView) findViewById(R.id.img_ItemImage);
+//        image.setImageResource(R.drawable.manzana);
+
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_item, menu);
-        return true;
+
+
+    public  void save() {
+//        FileInputStream fis = new FileInputStream("/storage/sdcard/demoImage.jpg");
+//        byte[] image= new byte[fis.available()];
+//        fis.read(image);
+//        fis.close();
+
+        mtextItemDescription = (EditText)  findViewById(R.id.editText_Item);
+        mtextItemPrice = (EditText)  findViewById(R.id.editText_Price);
+
+        insertNoteToDatabase(mtextItemDescription.getText().toString(),
+                             mtextItemPrice.getText().toString());
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+    private void insertNoteToDatabase(String itemDescription, String itemPrice){
+        final ContentValues insertValues = new ContentValues();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
+        insertValues.put(ItemInfoEntry.COLUMN_ITEM_DESCRIPTION,itemDescription);
+        insertValues.put(ItemInfoEntry.COLUMN_ITEM_PRICE,itemPrice);
 
-        return super.onOptionsItemSelected(item);
+        getContentResolver().insert(Items.CONTENT_URI, insertValues);
+    }
+
+    private void saveItemToDatabase(String itemId, String itemDescription, String itemPrice){
+        final ContentValues values = new ContentValues();
+
+        values.put(ItemInfoEntry.COLUMN_ITEM_ID,itemId);
+        values.put(ItemInfoEntry.COLUMN_ITEM_DESCRIPTION,itemDescription);
+        values.put(ItemInfoEntry.COLUMN_ITEM_PRICE,itemPrice);
+
+        mItemUri = ContentUris.withAppendedId(Items.CONTENT_URI, mItemId);
+        getContentResolver().update(mItemUri, values, null, null);
     }
 }

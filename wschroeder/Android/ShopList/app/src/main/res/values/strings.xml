@@ -1,5 +1,7 @@
 <resources>
-    <string name="app_name">ShopList</string>
+    <string name="app_name">Shop List</string>
     <string name="action_settings">Settings</string>
     <string name="textView">TextView</string>
+    <string name="item">Item</string>
+    <string name="price">Price</string>
 </resources>

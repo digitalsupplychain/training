@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".ItemActivity"
+            android:name=".ItemsActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -19,6 +19,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".ItemActivity" />
+
+        <provider
+            android:name=".ShopListProvider"
+            android:authorities="com.schroeder.walter.shoplist.provider"
+            android:enabled="true"
+            android:exported="true"></provider>
     </application>
 
 </manifest>
