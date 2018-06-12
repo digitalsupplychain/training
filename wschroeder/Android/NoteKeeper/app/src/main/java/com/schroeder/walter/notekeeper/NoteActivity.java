@@ -10,18 +10,25 @@ import android.content.Loader;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
 
 import com.schroeder.walter.notekeeper.NoteKeeperDatabaseContract.CourseInfoEntry;
 import com.schroeder.walter.notekeeper.NoteKeeperDatabaseContract.NoteInfoEntry;
+
+import java.util.concurrent.TimeUnit;
 
 import static com.schroeder.walter.notekeeper.NoteKeeperProviderContract.*;
 
@@ -210,12 +217,66 @@ public class NoteActivity extends AppCompatActivity implements LoaderManager.Loa
     }
 
     private void createNewNote() {
+
+        @SuppressLint("StaticFieldLeak")
+        AsyncTask<ContentValues, Integer, Uri> task = new AsyncTask<ContentValues, Integer, Uri>() {
+            private ProgressBar mProgressBar;
+
+            @Override
+            protected void onPreExecute() {
+                mProgressBar = (ProgressBar) findViewById(R.id.progress_Bar);
+                mProgressBar.setVisibility(View.VISIBLE);
+                publishProgress(1);
+            }
+
+            @Override
+            protected Uri doInBackground(ContentValues... params) {
+                ContentValues insertValues = params[0];
+                Uri uri = getContentResolver().insert(Notes.CONTENT_URI,insertValues);
+
+                simulateLongRunningWork();
+                publishProgress(2);
+                simulateLongRunningWork();
+                publishProgress(3);
+                simulateLongRunningWork();
+                return uri;
+            }
+
+            @Override
+            protected void onProgressUpdate(Integer... values) {
+                int progressValue = values[0];
+                mProgressBar.setProgress(progressValue);
+            }
+
+            @Override
+            protected void onPostExecute(Uri uri) {
+                Log.d(TAG, "onPosExecute -thread: " + Thread.currentThread().getId());
+                mNoteUri = uri;
+                displaySnackbar(mNoteUri.toString());
+                mProgressBar.setVisibility(View.GONE);
+            }
+        };
+
         final ContentValues values = new ContentValues();
         values.put(NoteInfoEntry.COLUMN_COURSE_ID, "");
         values.put(NoteInfoEntry.COLUMN_NOTE_TITLE, "");
         values.put(NoteInfoEntry.COLUMN_NOTE_TEXT, "");
 
-        mNoteUri = getContentResolver().insert(Notes.CONTENT_URI, values);
+        Log.d(TAG, "Call to execute -thread: " + Thread.currentThread().getId());
+        task.execute(values);
+    }
+
+    private void simulateLongRunningWork() {
+        try {
+            TimeUnit.SECONDS.sleep(2);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void displaySnackbar(String s) {
+        View view = findViewById(R.id.spinner_courses);
+        Snackbar.make(view, s, Snackbar.LENGTH_LONG).show();
     }
 
     @Override
@@ -287,7 +348,14 @@ public class NoteActivity extends AppCompatActivity implements LoaderManager.Loa
     }
 
     private void deleteNoteFromDatabase() {
-        getContentResolver().delete(mNoteUri, null, null);
+        AsyncTask task = new AsyncTask() {
+            @Override
+            protected Object doInBackground(Object[] objects) {
+                getContentResolver().delete(mNoteUri, null, null);
+                return null;
+            }
+        };
+        task.execute();
     }
 
     private void storePreviousNoteValues() {

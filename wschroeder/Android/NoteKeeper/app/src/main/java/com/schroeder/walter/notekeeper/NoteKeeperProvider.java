@@ -9,18 +9,15 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.provider.BaseColumns;
-import android.provider.ContactsContract;
 
 import com.schroeder.walter.notekeeper.NoteKeeperDatabaseContract.CourseInfoEntry;
 import com.schroeder.walter.notekeeper.NoteKeeperDatabaseContract.NoteInfoEntry;
-
-import java.nio.charset.CodingErrorAction;
 
 import static com.schroeder.walter.notekeeper.NoteKeeperProviderContract.*;
 
 public class NoteKeeperProvider extends ContentProvider {
 
-    private NoteKeeperOpenHelper mDbOpenHelder;
+    private NoteKeeperOpenHelper mDbOpenHelper;
     private static final String MIME_VENDOR_TYPE = "vnd." + AUTHORITY + ".";
 
     private static UriMatcher sUriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
@@ -50,7 +47,7 @@ public class NoteKeeperProvider extends ContentProvider {
         String rowSelection = null;
         String[] rowSelectionArgs = null;
         int nRows = -1;
-        SQLiteDatabase db = mDbOpenHelder.getReadableDatabase();
+        SQLiteDatabase db = mDbOpenHelper.getReadableDatabase();
 
         int uriMatch = sUriMatcher.match(uri);
         switch(uriMatch) {
@@ -112,7 +109,7 @@ public class NoteKeeperProvider extends ContentProvider {
 
     @Override
     public Uri insert(Uri uri, ContentValues values) {
-        SQLiteDatabase db = mDbOpenHelder.getWritableDatabase();
+        SQLiteDatabase db = mDbOpenHelper.getWritableDatabase();
         long rowId = -1;
         Uri rowUri = null;
         int uriMatch = sUriMatcher.match(uri);
@@ -136,7 +133,7 @@ public class NoteKeeperProvider extends ContentProvider {
 
     @Override
     public boolean onCreate() {
-        mDbOpenHelder = new NoteKeeperOpenHelper(getContext());
+        mDbOpenHelper = new NoteKeeperOpenHelper(getContext());
         return true;
     }
 
@@ -144,7 +141,7 @@ public class NoteKeeperProvider extends ContentProvider {
     public Cursor query(Uri uri, String[] projection, String selection,
                         String[] selectionArgs, String sortOrder) {
         Cursor cursor = null;
-        SQLiteDatabase db = mDbOpenHelder.getReadableDatabase();
+        SQLiteDatabase db = mDbOpenHelper.getReadableDatabase();
 
         int uriMatch = sUriMatcher.match(uri);
         switch (uriMatch) {
@@ -197,7 +194,7 @@ public class NoteKeeperProvider extends ContentProvider {
         String rowSelection = null;
         String[] rowSelectionArgs = null;
         int nRows = -1;
-        SQLiteDatabase db = mDbOpenHelder.getReadableDatabase();
+        SQLiteDatabase db = mDbOpenHelper.getReadableDatabase();
 
         int uriMatch = sUriMatcher.match(uri);
         switch(uriMatch) {
